@@ -11,3 +11,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+[data-theme="dark"] {
+  color: #dedede;
+}
+.html[data-theme="light"] {
+  color: #202020;
+}
+.timetable-tile{
+  animation: fadeOut 0.2s;
+}
+@keyframes fadeOut {
+  0%{
+    transform: translateY(-5px);
+    opacity: 0;
+  }
+  100%{
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
