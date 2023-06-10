@@ -6,6 +6,7 @@ import { ImgLoad } from '../components/ImgLoad';
 import { LineDivider } from '../components/LineDivider';
 import { RemoveRedEye } from '@mui/icons-material';
 import { BoxTile } from './BoxTile';
+import { useContext } from 'react';
 
 export function SideBars() {
     return (

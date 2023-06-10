@@ -71,7 +71,7 @@ export function AnimeTimetable(){
             <Typography variant='h6' sx={{textDecoration:'outline'}}>Расписание выхода серий</Typography>
             <LineDivider color={'gray'}/>
             <Box sx={{ display: 'flex',flexDirection: 'row', gap: '10px', maxWidth: '100%', overflowX: 'auto', paddingBottom: '5px' }}>
-                <Box ref={thumb} sx={{ transition: '0.25s ease-in-out', position: 'absolute', zIndex: '10000', width: '50px', height: '2px', background: isMobile ? 'transparent' : theme.palette.warning.main }}></Box>
+                <Box ref={thumb} sx={{ transition: '0.25s', position: 'absolute', zIndex: '1', width: '50px', height: '2px',background: theme.palette.warning.main, display: isMobile ? 'none' : 'block' }}></Box>
                 {AnimeTimetable.map(day => (
                     <Box>
                         <Button

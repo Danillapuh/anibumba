@@ -10,7 +10,7 @@ export function LongTile({title, content, img, maxWidth}) {
                 {img}
                 <Box sx={{display: 'flex', flexDirection: 'column' }}>
                     <Typography variant="h8" sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', maxWidth: maxWidth || '350px', flexShrink:'1',flexGrow:'1', overflow: 'hidden', fontWeight:'500'}}>{title}</Typography>
-                    <Typography variant="h8" sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', maxWidth: maxWidth || '350px', overflow: 'hidden' }}>{content}</Typography>
+                    <Typography variant="h8" sx={{ color: theme.palette.text.secondary,whiteSpace: 'nowrap', textOverflow: 'ellipsis', maxWidth: maxWidth || '350px', overflow: 'hidden' }}>{content}</Typography>
                 </Box>
             </Box>
         </Box>

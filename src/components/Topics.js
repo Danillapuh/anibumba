@@ -23,7 +23,7 @@ export function Topics({topics, title}){
     return(
         <>
        <BoxTile>
-        <Box sx={{borderRadius:'5px',background: theme.custom.tileBg}}>
+        <Box sx={{borderRadius:'5px'}}>
             <Typography variant="h6" sx={{paddingLeft:'10px'}}>{title}</Typography>
             <LineDivider color="gray"/>
             <Box sx={{fontSize:'15px',display:'flex', flexDirection:'column', gap:'0px', padding:'5px'}}>
@@ -36,7 +36,7 @@ export function Topics({topics, title}){
                         <Typography variant="h8" sx={{opacity:'0.5'}}>{new Date(topic.created_at).toDateString()}</Typography>
                     </Box>}/>
                 ))}
-                <ButtonBase sx={{background: theme.custom.basicButton,transition:'0.3s','&:hover':{background:theme.custom.basicButtonHover},display:'flex'}}>
+                <ButtonBase sx={{borderRadius: theme.shape.tileRadius,background: theme.custom.basicButton,transition:'0.3s','&:hover':{background:theme.custom.basicButtonHover},display:'flex'}}>
                     <Typography variant="h7" sx={{color:'white'}}>Читать ещё</Typography>
                     <MoreHoriz  sx={{color:'white'}}/>
                 </ButtonBase>
