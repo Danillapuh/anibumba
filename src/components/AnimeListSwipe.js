@@ -8,6 +8,7 @@ export function AnimeListSwipe({sizeFactor, title}){
     const animes = AnimesArray.filter((anime, idx)=>idx<=20)
     return(
         <>
+        <Box sx={{display:'flex', flexDirection:'column', overflowX:'auto'}}>
         <Typography variant="h6">{title}</Typography>
         <LineDivider/>
            <Box sx={{transition:'0.3s',paddingBottom:'15px',marginTop:'10px',position:'relative',display:'flex', gap:'25px', overflowX:'auto'}}>
@@ -15,6 +16,7 @@ export function AnimeListSwipe({sizeFactor, title}){
                    <AnimeBox anime={anime} sizeFactor={sizeFactor}/>
                 ))}
            </Box>
+        </Box>
         </>
     )
 }

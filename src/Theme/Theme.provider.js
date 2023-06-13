@@ -5,7 +5,7 @@ export const LightTheme = createTheme({
     custom: {
       tileBg: '#ffff',
       bodyBg: '#efefef',
-      hoverLighter: '#efefef',
+      hoverLighter: 'rgba(0, 0, 0, 0.09)',
       headerBg: '#3f51b5',
       basicButton: '#3f51b5',
       basicButtonHover: '#3949a1',
@@ -13,7 +13,7 @@ export const LightTheme = createTheme({
       contrastBg: '#ffffff'
     },
     shape:{
-      tileRadius: '3px'
+      tileRadius: '4px'
     }
   })
 
@@ -21,7 +21,7 @@ export const LightTheme = createTheme({
     custom: {
       tileBg: '#202020',
       bodyBg: '#141414',
-      hoverLighter: '#4c4c4c', // #343434
+      hoverLighter: '#2f2f2f', // #343434
       headerBg: '#343434',      // #673ab7
       basicButton: '#3f3e3e', // #673ab7'
       basicButtonHover: '#4b3ab7',
@@ -32,7 +32,7 @@ export const LightTheme = createTheme({
       mode:'dark'
     },
     shape:{
-      tileRadius: '2px'
+      tileRadius: '4px'
     }
   })
 

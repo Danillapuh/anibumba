@@ -28,7 +28,7 @@ export function ExtendSettingsMenu(){
                 <ButtonBase disableRipple ref={anchorRef} onClick={handleclick}>
                     <KeyboardArrowDownSharp sx={{ color: 'white',transition:'0.2s', transform: isopen? 'rotate(180deg)' : 'rotate(0)' }} />
                 </ButtonBase>
-                {isopen ? <Fade in={isopen}><Box sx={{ boxShadow:'2px 5px 8px 0px rgb(0 0 0 / 44%)',height: isopen ? 'fit-content' : '0px',overflow:'hidden',opacity: isopen ? '1' : '0', transition:'opacity 0.1s',transform:'translateY(30%) translateX(-70%)',zIndex: '20000', position: 'absolute', left:'0', top:'0'}}>
+                <Fade in={isopen}><Box sx={{ boxShadow:'2px 5px 8px 0px rgb(0 0 0 / 44%)',height: isopen ? 'fit-content' : '0px',overflow:'hidden',opacity: isopen ? '1' : '0', transition:'opacity 0.1s',transform:'translateY(30%) translateX(-70%)',zIndex: '20000', position: 'absolute', left:'0', top:'0'}}>
                     <BoxTile style={{ margin: '0', padding:'10px' , background: theme.custom.contrastBg}}>
                         <Typography>{user.user.displayName}</Typography>
                         <Divider sx={{margin:'3px 0px'}}/>
@@ -53,11 +53,12 @@ export function ExtendSettingsMenu(){
                                 let auth = getAuth()
                                 signOut(auth).then(() => {
                                     localStorage.clear()
+                                    window.location.reload()
                                 })
                             }}>Выйти</Button>
                         </Box>
                     </BoxTile>
-                </Box></Fade> : ''}
+                </Box></Fade>
             </Box>
         </>
     )

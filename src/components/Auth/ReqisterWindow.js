@@ -6,12 +6,12 @@ import { Chat, DoneAll, Email, EmailOutlined, EmailRounded, EmailSharp, Password
 import { TypographyWithIcon } from "../TypographyWithIcon";
 import { useContext, useState } from "react";
 import { createUserWithEmailAndPassword, getAuth, updateProfile } from "firebase/auth";
-import { modalContext } from "../header.layout";
+import { HeaderContext, modalContext } from "../header.layout";
 import { doc, setDoc } from "@firebase/firestore";
 import { db } from "../../firebase/firebase.config";
 
 export function RegisterWindow(){
-    const setModalOpen = useContext(modalContext)
+    const {setModal} = useContext(HeaderContext)
     const [email, setEmail] = useState('')
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
@@ -32,7 +32,7 @@ export function RegisterWindow(){
                     displayName: login
                 })
                 setLoading(false)
-                setModalOpen(false)
+                setModal(false)
             }).catch((reason)=>{
                 setLoading(false)
                 console.log(reason)

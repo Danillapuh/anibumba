@@ -7,33 +7,42 @@ import { auth, db } from "../firebase/firebase.config";
 import { arrayRemove, arrayUnion, doc, updateDoc } from "@firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { isMobile } from "react-device-detect";
+import { useContext } from "react";
+import { HeaderContext, modalContext } from "./header.layout";
 
-export function Liked({anime}){
+export function Liked({id}){
+    const user = useSelector((state)=>state.user.user)
+    const {setModal} = useContext(HeaderContext)
     const theme = useTheme()
     const dispatch = useDispatch()
     const bookmarked = useSelector(state=>{
+        console.log(typeof(state.user.bookmarked),JSON.stringify(state.user.bookmarked))
         return state.user.bookmarked
     })
 
     const handleMarked = ()=>{
-        if(bookmarked.indexOf(anime.id) == -1){
-            dispatch(addBookmarked(anime))
+        if(!user){
+            setModal(true)
+            return
+        }
+        if(bookmarked.indexOf(id) == -1){
+            dispatch(addBookmarked(id))
             let docref = doc(db, 'users', auth.currentUser.uid)
             updateDoc(docref,{
-                bookmarked: arrayUnion(anime)
+                bookmarked: arrayUnion(id)
             })
             return
         }
-        dispatch(deleteBookmarked(anime.id))
+        dispatch(deleteBookmarked(id))
         let docref = doc(db, 'users', auth.currentUser.uid)
             updateDoc(docref,{
-                bookmarked: arrayRemove()
+                bookmarked: arrayRemove(id)
             })
         return
     }
     return(
         <ButtonBase onClick={handleMarked} sx={{width: '30%', opacity: isMobile ? 1 : 0, transition: '0.2s' }}>
-            {bookmarked.indexOf('id') != -1 ? <CheckCircle sx={{ transition: '0.1s', '&:hover': { transform: isMobile ? '' : 'scale(1.2)', color: theme.palette.error.main }, color: theme.palette.error.dark, overflow: 'hidden' }} /> :
+            {bookmarked.indexOf(id) != -1 ? <CheckCircle sx={{ transition: '0.1s', '&:hover': { transform: isMobile ? '' : 'scale(1.2)', color: theme.palette.error.main }, color: theme.palette.error.dark, overflow: 'hidden' }} /> :
             <BookmarkAdd sx={{ transition: '0.1s', '&:hover': { transform: isMobile ? '' : 'scale(1.2)', color: theme.palette.error.main }, color: theme.palette.error.dark, overflow: 'hidden' }} />}
         </ButtonBase>
     )

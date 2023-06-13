@@ -1,4 +1,4 @@
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, Skeleton } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 
 export function ImgLoad({src, sx, onLoaded}){
@@ -42,18 +42,9 @@ export function ImgLoad({src, sx, onLoaded}){
             onLoaded()
         }
     }
-
-    useEffect(()=>{
-        if(loadRef.current){
-            let axisLoad = loadRef.current.getBoundingClientRect()
-            let axisParent = parentref.current.getBoundingClientRect()
-            loadRef.current.style.left = `${(axisParent.width/2)-(axisLoad.width/2)}px`
-            loadRef.current.style.top = `${(axisParent.height/2)-(axisLoad.height/2)}px`
-        }
-    }, [loadRef])
     return(
         <>
-            {<CircularProgress ref={loadRef} sx={{position:'absolute',opacity: !loaded && startLoading ? '1' : '0'}}/>}
+            {<Skeleton variant="rounded" sx={{width:'100%',height:'100%',left:0, top:0,position:'absolute',display: !loaded && startLoading ? 'block' : 'none'}}/>}
             <img ref={imgRef} onLoad={handleLaoded} src={curSrc} style={sx}/>
             <Box ref={parentref} sx={{display: loaded ? 'none' : 'block',position:'absolute', left:'0', top:'0', height:'100%',width:'100%', backdropFilter:'brightness(0.90)'}}/>
         </>

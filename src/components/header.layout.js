@@ -5,7 +5,7 @@ import { AnimeListSwipe } from "./AnimeListSwipe";
 import { Book, ExitToApp, KeyboardArrowDownSharp, LiveTv, Movie, Person, Search, Shuffle, ToggleOff } from "@mui/icons-material";
 import { SearchAnime } from "./search.comp";
 import { useTheme } from "@emotion/react";
-import { createContext, useCallback, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useRef, useState } from "react";
 import { BoxTile } from "./BoxTile";
 import Modal from '@mui/material/Modal';
 import { AuthWindow } from "./Auth/AuthWindow";
@@ -13,9 +13,11 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { setBookmarked, setUser } from "../redux/user.slice";
 import { ExtendSettingsMenu } from "./header/ExtendSettingsMenu";
-export const modalContext = createContext()
+import { Link } from "react-router-dom";
+export const HeaderContext = createContext()
 
 export function HeaderLayout({ children, isDark, toggleTheme }) {
+    const headerRef = useRef(null)
     const user = useSelector((state)=>state.user.user)
     const dispatch = useDispatch()
     const auth = getAuth();
@@ -26,15 +28,13 @@ export function HeaderLayout({ children, isDark, toggleTheme }) {
     dispatch(setUser(user))
    })
     const [modalOpen, setModalOpen] = useState(false)
-    const call = useCallback(()=>{
-        alert('a')
-    },[])
+    
     const theme = useTheme()
     const navLinks = [
-        { href: '#', name: 'Аниме', icon: <LiveTv/> },
-        { href: '#', name: 'Манга', icon: <Book/> },
-        { href: '#', name: 'Персонажи', icon: <Person/> },
-        { href: '#', name: 'Случайное Аниме', icon: <Shuffle/> }
+        { href: '#', name: 'Аниме', icon: <LiveTv sx={{width:'20px', height:'20px'}}/> },
+        { href: '#', name: 'Манга', icon: <Book  sx={{width:'20px', height:'20px'}}/> },
+        { href: '#', name: 'Персонажи', icon: <Person sx={{width:'20px', height:'20px'}}/> },
+        { href: '#', name: 'Случайное Аниме', icon: <Shuffle sx={{width:'20px', height:'20px'}}/> }
     ]
     useEffect(()=>{
         const liked = localStorage.getItem('liked')
@@ -53,19 +53,20 @@ export function HeaderLayout({ children, isDark, toggleTheme }) {
         }
     },[])
     return (
-        <>
-            <Grid container justifyContent={"center"} sx={{gap:'20px',paddingTop:{md:'65px', xs:'30px'},position: 'relative'}}>
+        <>  <HeaderContext.Provider value={{
+            setModal: setModalOpen,
+            headerRef
+        }}>
+          <Grid container justifyContent={"center"} sx={{gap:'20px',paddingTop:{md:'65px', xs:'30px'},position: 'relative'}}>
                 <Modal onClose={()=>setModalOpen(false)} open={modalOpen} sx={{background:'rgb(0 0 0 / 70%)',zIndex:'1000',justifyContent:'center', alignItems:'center', display:'flex'}}>
-                      <modalContext.Provider value={setModalOpen}>
-                         <AuthWindow/>
-                      </modalContext.Provider>
+                    <AuthWindow open={modalOpen}/>
                 </Modal>
-                <Grid xs={12} md={12} item sx={{ zIndex: '1000', position: 'fixed', left:0,top:0,background: theme.custom.headerBg, width:'100%',padding: '7px', display: 'flex', justifyContent: 'space-between', gap: '25px', alignItems: 'center' }}>
+                <Grid ref={headerRef} xs={12} md={12} item sx={{ transition:'0.2s',boxShadow:'rgb(24 24 24 / 0%) 2px 5px 8px 0px',zIndex: '1000', position: 'fixed', left:0,top:0,background: theme.custom.headerBg, width:'100%',padding: '7px', display: 'flex', justifyContent: 'space-between', gap: '25px', alignItems: 'center' }}>
                     <Box sx={{ display: 'flex', gap: '10px' }}>
-                        <Typography sx={{ fontSize:{xs:'1.75rem',md:'2.125rem'},color: 'white', fontWeight: 'bold' }} variant="h4">Anibuba</Typography>
-                        <Box sx={{ alignItems: 'center', display: { xs: 'none', md: 'flex' }, gap: '10px' }}>
+                        <Link to="/" style={{textDecoration:'none'}}><Typography sx={{ fontSize:{xs:'1.75rem',md:'1.9rem'},color: 'white', fontWeight: 'bold' }} variant="h4"><span style={{color: '#d76457'}}>A</span>nibuba</Typography></Link>
+                        <Box sx={{ alignItems: 'center', display: { xs: 'none', md: 'flex' }, gap: '0px' }}>
                             {navLinks.map(link => (
-                                <Typography component={'a'} variant="h12" sx={{ display:'flex',gap:'5px', alignItems:'center',padding: '5px 10px', transition: '0.3s', color: 'white', opacity: '0.85', '&:hover': { cursor: 'pointer', backdropFilter: 'brightness(0.85)', opacity: '1', borderRadius: theme.shape.tileRadius}}}>
+                                <Typography component={'a'} variant="h8" sx={{ fontSize:'0.9rem',display:'flex',gap:'5px', alignItems:'center',padding: '5px 10px', transition: '0.3s', color: 'white', opacity: '0.85', '&:hover': { cursor: 'pointer', backdropFilter: 'brightness(0.85)', opacity: '1', borderRadius: theme.shape.tileRadius}}}>
                                     {link.icon}{link.name}
                                 </Typography>
                             ))}
@@ -91,6 +92,7 @@ export function HeaderLayout({ children, isDark, toggleTheme }) {
                 </Grid>
                 {children}
             </Grid>
+            </HeaderContext.Provider>
         </>
     )
 }

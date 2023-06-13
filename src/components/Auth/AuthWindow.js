@@ -1,11 +1,11 @@
-import { Box, Button, ButtonBase, Grid, Typography } from "@mui/material";
+import { Box, Button, ButtonBase, Fade, Grid, Typography } from "@mui/material";
 import { BoxTile } from "../BoxTile";
 import { RegisterWindow } from "./ReqisterWindow";
 import { LineDivider } from "../LineDivider";
 import { LoginWindow } from "./LoginWindow";
 import { useState } from "react";
 
-export function AuthWindow(){
+export function AuthWindow({open}){
     const authWindows = {
         register:{
             title: 'Регистрация',
@@ -20,7 +20,8 @@ export function AuthWindow(){
     }
     const [currentWindow, setCurrentWindow] = useState(authWindows.login)
     return(
-            <Grid lg={4} md={5} sm={8} xs={12}>
+           <Fade in={open}>
+             <Grid lg={4} md={5} sm={8} xs={12}>
                 <BoxTile style={{padding:'15px'}}>
                 <Box sx={{display: 'flex', gap:'0px'}}>
                     <ButtonBase>
@@ -32,5 +33,6 @@ export function AuthWindow(){
                 {currentWindow.label}
             </BoxTile>
             </Grid>
+           </Fade>
     )
 }

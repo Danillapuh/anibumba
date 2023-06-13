@@ -6,12 +6,12 @@ import { DoneAll, Email, EmailOutlined, EmailRounded, EmailSharp, PasswordOutlin
 import { TypographyWithIcon } from "../TypographyWithIcon";
 import { useContext, useState } from "react";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { modalContext } from "../header.layout";
+import { HeaderContext, modalContext } from "../header.layout";
 import { doc, getDoc } from "@firebase/firestore";
 import { db } from "../../firebase/firebase.config";
 
 export function LoginWindow(){
-    const setModalOpen = useContext(modalContext)
+    const {setModal} = useContext(HeaderContext)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordControl, setPasswordControl] = useState('')
@@ -23,7 +23,7 @@ export function LoginWindow(){
             setLoading(true)
             signInWithEmailAndPassword(auth,email,password).then((value)=>{
                 setLoading(false)
-                setModalOpen(false)
+                setModal(false)
                 const userRefdoc = doc(db,'users', auth.currentUser.uid)
                 getDoc(userRefdoc).then(docSnap=>{
                     if(docSnap.exists()){
